@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DBMarket" Class="ShopClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\DBMarket.mdf;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DBMarketConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Product" Member="Products">
+    <Type Name="Product">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NChar(100)" CanBeNull="true" />
+      <Column Name="Note" Type="System.String" DbType="NChar(255)" CanBeNull="true" />
+      <Column Name="Idshop" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Shop_Product" Member="Shop" ThisKey="Idshop" OtherKey="Id" Type="Shop" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Shop" Member="Shops">
+    <Type Name="Shop">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NChar(100)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="NChar(100)" CanBeNull="true" />
+      <Column Name="Mode" Type="System.String" DbType="NChar(100)" CanBeNull="true" />
+      <Association Name="Shop_Product" Member="Products" ThisKey="Id" OtherKey="Idshop" Type="Product" />
+    </Type>
+  </Table>
+</Database>

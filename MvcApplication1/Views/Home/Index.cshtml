@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@model IList<MvcApplication1.Models.ItemShop>
+<script type="text/javascript">
+    var xmlhttp;
+    var idcur;
+function getXmlHttp(){
+
+try {
+  xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+} catch (e) {
+  try {
+    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  } catch (E) {
+    xmlhttp = false;
+  }
+}
+
+if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
+  xmlhttp = new XMLHttpRequest();
+}
+
+}
+function CallServerForUpdate(id) {
+    var url = "HandlerAjax.ashx?idshop=" + id;
+    idcur = id;
+    xmlhttp.open("GET", url);
+    xmlhttp.onreadystatechange = ApplyUpdate;
+    xmlhttp.send(null);
+}
+function ApplyUpdate() {
+    // Проверить успешность получения ответа
+    if (xmlhttp.readyState == 4) {
+        if (xmlhttp.status == 200) {
+            var response = xmlhttp.responseText;
+            var div = document.getElementById(idcur);
+            div.innerHTML= response;
+        }
+    }
+}
+</script>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Shop</title>
+</head>
+<style type="text/css">
+
+table {
+font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+font-size: 14px;
+border-collapse: collapse;
+text-align: center;
+}
+th, td:first-child {
+background: #AFCDE7;
+
+padding: 10px 20px;
+}
+th, td {
+border-style: solid;
+border-width: 0 1px 1px 0;
+}
+td {
+background: #D8E6F3;
+}
+th:first-child, td:first-child {
+text-align: left;
+}
+
+
+
+</style>
+
+<body onload ="getXmlHttp();">
+    <div>
+    <h1>Магазины</h1>
+    <table>
+    <tr>
+      <th>Название</th>
+      <th>Адрес</th>
+      <th>Время работы</th>
+      <th>Товары</th>
+     </tr>
+        @foreach (var shop in Model)
+    {  
+         <tr>
+            
+         <th>@shop.Name</th>
+         <th>@shop.Address</th>
+         <th>@shop.Mode</th>
+
+             <th>  <input type="button" name="button" value="посмотреть товары" onclick="CallServerForUpdate(@shop.Id);"/>
+                <div id =@shop.Id></div>
+             </th>
+         </tr>
+    }
+    </table>
+    </div>
+</body>
+</html>
