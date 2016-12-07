@@ -29,12 +29,18 @@ function CallServerForUpdate(id) {
     xmlhttp.onreadystatechange = ApplyUpdate;
     xmlhttp.send(null);
 }
+function Hide(id)
+{
+    var div = document.getElementById(id);
+    div.innerHTML="";
+}
 function ApplyUpdate() {
     // Проверить успешность получения ответа
     if (xmlhttp.readyState == 4) {
         if (xmlhttp.status == 200) {
             var response = xmlhttp.responseText;
             var div = document.getElementById(idcur);
+            response+=  "<input type=\"button\" name=\"butnhide\" value=\"спрятать\" onclick=\"Hide("+idcur+");\"/>";
             div.innerHTML= response;
         }
     }
